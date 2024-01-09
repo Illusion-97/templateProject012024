@@ -1,4 +1,4 @@
-import {AbstractControl, FormGroup} from "@angular/forms";
+import {AbstractControl, FormGroup, ValidationErrors, ValidatorFn} from "@angular/forms";
 
 export function getFormControl(form: FormGroup, controlName: string): AbstractControl | undefined {
   // récupérer un FormControl contenu dans un FormGroup à partir de son nom
@@ -12,4 +12,16 @@ export function isInvalid(control: AbstractControl | undefined) {
 
 export function hasError(control: AbstractControl | undefined, errorCode: string) {
   return control?.dirty && control?.hasError(errorCode)
+}
+
+export function mustMatch(matchingControl: AbstractControl) : ValidatorFn {
+  return (control: AbstractControl) : ValidationErrors | null => {
+    return control.value !== matchingControl.value // condition de validation
+      ? { // Objet de type ValidationErrors
+        mustmatch: { // errorCode : {value: errorValue}
+          value : control.value
+        }
+    }
+      : null
+  }
 }

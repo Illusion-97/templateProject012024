@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {getFormControl, isInvalid, hasError} from "../../tools/reactive-forms-tool";
+import {getFormControl, isInvalid, hasError, mustMatch} from "../../tools/reactive-forms-tool";
 
 @Component({
   selector: 'app-register',
@@ -13,7 +13,7 @@ export class RegisterComponent {
   form : FormGroup = new FormGroup<any>({
     username:   new FormControl('', [Validators.required]),
     email:      new FormControl('', [Validators.required, Validators.email]),
-    password:   new FormControl('', [Validators.required, Validators.minLength(8)]),
+    password:   new FormControl('', [Validators.required, Validators.minLength(8), mustMatch(this.confirmPassword)]),
     icon:      new FormControl(''),
   })
 
