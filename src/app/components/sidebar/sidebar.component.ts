@@ -7,6 +7,8 @@ import { Component } from '@angular/core';
 })
 export class SidebarComponent {
 
+  active: boolean = false;
+
   href: string = "#";
   src: string = "pic07.jpg";
   alt: string = "img";

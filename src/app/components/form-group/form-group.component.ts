@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {getFormControl, hasError, isInvalid} from "../../tools/reactive-forms-tool";
+import {PostService} from "../../services/post.service";
 
 @Component({
   selector: 'app-form-group',
@@ -17,10 +18,14 @@ export class FormGroupComponent {
     postLink: new FormControl('', [Validators.required])
   })
 
+  constructor(private service: PostService) {
+    console.log(service.posts)
+  }
+
   handleSubmit() {
     // Toujours en premier
     if(this.form.valid) {
-      console.log("POST",this.form.value)
+      this.service.save(this.form.value)
     }
   }
 

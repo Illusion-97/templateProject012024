@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {getFormControl, isInvalid, hasError, mustMatch} from "../../tools/reactive-forms-tool";
+import {AuthService} from "../../services/auth.service";
 
 @Component({
   selector: 'app-register',
@@ -17,10 +18,12 @@ export class RegisterComponent {
     icon:      new FormControl(''),
   })
 
+  constructor(private service: AuthService) {
+  }
   handleSubmit() {
     // Toujours en premier
     if(this.form.valid) {
-      console.log("USER",this.form.value)
+      this.service.register(this.form.value)
     }
   }
 

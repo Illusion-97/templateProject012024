@@ -13,6 +13,7 @@ import { FormControlComponent } from './components/form-control/form-control.com
 import { FormGroupComponent } from './components/form-group/form-group.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { LoginComponent } from './pages/login/login.component';
+import { EditorComponent } from './pages/editor/editor.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { LoginComponent } from './pages/login/login.component';
     FormControlComponent,
     FormGroupComponent,
     RegisterComponent,
-    LoginComponent
+    LoginComponent,
+    EditorComponent
   ],
   imports: [
     BrowserModule,
