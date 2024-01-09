@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {getFormControl, isControlInvalid} from "../../tools/reactive-forms-tool";
+import {getFormControl, hasError, isInvalid} from "../../tools/reactive-forms-tool";
 
 @Component({
   selector: 'app-form-group',
@@ -33,7 +33,7 @@ export class FormGroupComponent {
   }
 
   get titreInvalid() {
-    return isControlInvalid(this.form, "titre")
+    return isInvalid(this.titre)
   }
 
   getControl(name: string) {
@@ -41,12 +41,11 @@ export class FormGroupComponent {
   }
 
   isInvalid(name: string) {
-    return isControlInvalid(this.form, name)
+    return isInvalid(this.getControl(name))
   }
 
   hasError(name: string, errorCode: string) {
-    const control = this.getControl(name);
-    return control?.touched && control?.hasError(errorCode);
+    return hasError(this.getControl(name), errorCode)
   }
 
 }

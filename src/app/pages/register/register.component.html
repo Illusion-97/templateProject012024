@@ -1,1 +1,25 @@
-<p>register works!</p>
+<form (submit)="handleSubmit()" [formGroup]="form">
+  <label> Username :
+    <input [class.invalid]="isInvalid('username')" type="text" name="titre" formControlName="username">
+    <p *ngIf="hasError('username','required')">Le nom d'utilisateur est requis</p>
+  </label>
+  <label> Email :
+    <input [class.invalid]="isInvalid('postLink')"  type="text" name="email"  formControlName="email">
+    <p *ngIf="hasError('email','required')">Le mail est requis</p>
+    <p *ngIf="hasError('email','email')">Le format ne corresponds pas</p>
+  </label>
+  <label> Password :
+    <input [class.invalid]="isInvalid('password')"  type="password" name="src" formControlName="password">
+    <p *ngIf="hasError('password','required')">Le mot de passe est requis</p>
+    <p *ngIf="hasError('password','minlength')">Le mot de passe doit avoir minimum 8 caractères</p>
+  </label>
+  <label> Confirm Password :
+    <input [class.invalid]="confirmPassword.touched && confirmPassword.invalid" type="text" name="text" [formControl]="confirmPassword">
+    <p *ngIf="confirmPassword.touched && confirmPassword.hasError('required')">La confirmation est requise</p>
+  </label>
+  <label> Icone :
+    <input type="text" name="alt" formControlName="icone">
+  </label>
+  <input type="submit" value="Enregistrer" [disabled]="form.pristine || form.invalid">
+</form>
+

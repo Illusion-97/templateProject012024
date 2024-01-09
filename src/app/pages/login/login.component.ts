@@ -7,4 +7,13 @@ import { Component } from '@angular/core';
 })
 export class LoginComponent {
 
+  mail: string = "";
+  password: string = "";
+
+  handleSubmit(valid: boolean) {
+    if (valid) console.log("CREDENTIAL", {
+      email: this.mail,
+      password: this.password
+    })
+  }
 }
