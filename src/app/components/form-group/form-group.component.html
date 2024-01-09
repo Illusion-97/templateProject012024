@@ -1,0 +1,23 @@
+<form (submit)="handleSubmit()">
+  <label> Titre :
+    <input type="text" name="titre">
+    <p >Le titre dois contenir au moins 10 caractères</p>
+  </label>
+  <label> Lien :
+    <input type="text" name="href">
+    <p >Le lien est requis</p>
+  </label>
+  <label> Source Image :
+    <input type="text" name="src">
+    <p >Le source de l'image est requise</p>
+  </label>
+  <label> Image Alt :
+    <input type="text" name="alt">
+  </label>
+  <label> Texte :
+    <input type="text" name="text">
+    <p >La description est requise</p>
+  </label>
+  <input type="submit" value="Enregistrer" [disabled]="">
+</form>
+
