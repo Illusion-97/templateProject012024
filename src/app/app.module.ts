@@ -11,6 +11,8 @@ import { HomeComponent } from './pages/home/home.component';
 import { FormulaireComponent } from './components/formulaire/formulaire.component';
 import { FormControlComponent } from './components/form-control/form-control.component';
 import { FormGroupComponent } from './components/form-group/form-group.component';
+import { RegisterComponent } from './pages/register/register.component';
+import { LoginComponent } from './pages/login/login.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +23,9 @@ import { FormGroupComponent } from './components/form-group/form-group.component
     HomeComponent,
     FormulaireComponent,
     FormControlComponent,
-    FormGroupComponent
+    FormGroupComponent,
+    RegisterComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
