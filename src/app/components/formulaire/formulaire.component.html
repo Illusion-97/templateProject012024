@@ -1,18 +1,26 @@
-<form>
+<form (submit)="handleSubmit(form.checkValidity())" #form>
   <label> Titre :
-    <input type="text" name="titre" required>
+    <input type="text" name="titre" required minlength="10" [(ngModel)]="post.titre"
+    [class.invalid]="!titre.checkValidity()" #titre>
+    <p *ngIf="!titre.checkValidity()">Le titre dois contenir au moins 10 caractères</p>
   </label>
   <label> Lien :
-    <input type="text" name="href" required>
+    <input type="text" name="href" required [(ngModel)]="post.postLink"
+           [class.invalid]="!lien.checkValidity()" #lien>
+    <p *ngIf="!lien.checkValidity()">Le lien est requis</p>
   </label>
   <label> Source Image :
-    <input type="text" name="src" required>
+    <input type="text" name="src" required [(ngModel)]="post.imageSrc"
+           [class.invalid]="!src.checkValidity()" #src>
+    <p *ngIf="!src.checkValidity()">Le source de l'image est requise</p>
   </label>
   <label> Image Alt :
-    <input type="text" name="alt" required>
+    <input type="text" name="alt" [(ngModel)]="post.imageAlt">
   </label>
   <label> Texte :
-    <input type="text" name="text" required>
+    <input type="text" name="text" required [(ngModel)]="post.description"
+           [class.invalid]="!description.checkValidity()" #description>
+    <p *ngIf="!description.checkValidity()">La description est requise</p>
   </label>
-  <input type="submit" value="Enregistrer">
+  <input type="submit" value="Enregistrer" [disabled]="!form.checkValidity()">
 </form>

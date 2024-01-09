@@ -5,10 +5,11 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { TwoWayBindingComponent } from './components/two-way-binding/two-way-binding.component';
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { TruncatePipe } from './pipes/truncate.pipe';
 import { HomeComponent } from './pages/home/home.component';
 import { FormulaireComponent } from './components/formulaire/formulaire.component';
+import { FormControlComponent } from './components/form-control/form-control.component';
 
 @NgModule({
   declarations: [
@@ -17,11 +18,13 @@ import { FormulaireComponent } from './components/formulaire/formulaire.componen
     TwoWayBindingComponent,
     TruncatePipe,
     HomeComponent,
-    FormulaireComponent
+    FormulaireComponent,
+    FormControlComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
+    ReactiveFormsModule,
     AppRoutingModule
   ],
   providers: [],

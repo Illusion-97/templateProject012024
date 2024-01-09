@@ -2,3 +2,7 @@
 .special {
   background-color: #f56a6a;
 }
+
+.invalid {
+  border: 1px solid red !important;
+}
