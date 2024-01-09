@@ -1,23 +1,24 @@
-<form (submit)="handleSubmit()">
+<form (submit)="handleSubmit()" [formGroup]="form">
   <label> Titre :
-    <input type="text" name="titre">
-    <p >Le titre dois contenir au moins 10 caractères</p>
+    <input [class.invalid]="titreInvalid" type="text" name="titre" formControlName="titre">
+    <p *ngIf="hasError('titre','required')">Le titre est requis</p>
+    <p *ngIf="hasError('titre','minlength')">Le titre dois contenir au moins 10 caractères</p>
   </label>
   <label> Lien :
-    <input type="text" name="href">
-    <p >Le lien est requis</p>
+    <input [class.invalid]="isInvalid('postLink')"  type="text" name="href"  formControlName="postLink">
+    <p *ngIf="isInvalid('postLink')">Le lien est requis</p>
   </label>
   <label> Source Image :
-    <input type="text" name="src">
-    <p >Le source de l'image est requise</p>
+    <input [class.invalid]="isInvalid('imageSrc')"  type="text" name="src" formControlName="imageSrc">
+    <p *ngIf="isInvalid('imageSrc')">Le source de l'image est requise</p>
   </label>
   <label> Image Alt :
-    <input type="text" name="alt">
+    <input type="text" name="alt" formControlName="imageAlt">
   </label>
   <label> Texte :
-    <input type="text" name="text">
-    <p >La description est requise</p>
+    <input [class.invalid]="isInvalid('description')" type="text" name="text" formControlName="description">
+    <p *ngIf="isInvalid('description')">La description est requise</p>
   </label>
-  <input type="submit" value="Enregistrer" [disabled]="">
+  <input type="submit" value="Enregistrer" [disabled]="form.pristine || form.invalid">
 </form>
-
+<p>Value : {{stringify(form.value)}}</p>
