@@ -1,0 +1,2 @@
+<input type="text" name="query" id="query" placeholder="Search" [(ngModel)]="value" (change)="onChange($event)">
+<p>{{value | truncate:50:" ***"}}</p>
