@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {AuthService} from "../../services/auth.service";
 
 @Component({
   selector: 'app-sidebar',
@@ -46,7 +47,7 @@ export class SidebarComponent {
     }
   ]
 
-  constructor() {
+  constructor(private service: AuthService) {
     this.minipostdefault = new MiniPostClassDefault();
     this.minipostdefault.src = "pic09.jpg"
     this.minipostdefault.text = this.text;
@@ -59,6 +60,15 @@ export class SidebarComponent {
   // On se dispense de cette fonction en respectant la syntaxe du Two Way Data Binding
   onChange(event: string): void {
     this.text = event;
+  }
+
+  logout() {
+    this.service.logout();
+  }
+
+  get isLogged(): boolean {
+    // Vérifie que la valeur n'est pas 'falsy'
+    return !!this.service.currentUser
   }
 }
 

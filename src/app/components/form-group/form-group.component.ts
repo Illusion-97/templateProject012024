@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {getFormControl, hasError, isInvalid} from "../../tools/reactive-forms-tool";
 import {PostService} from "../../services/post.service";
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
   selector: 'app-form-group',
@@ -18,14 +19,22 @@ export class FormGroupComponent {
     postLink: new FormControl('', [Validators.required])
   })
 
-  constructor(private service: PostService) {
+  constructor(private service: PostService, private router: Router, private route: ActivatedRoute) {
     console.log(service.posts)
+      alert(route.snapshot.paramMap.get("id"))
   }
 
   handleSubmit() {
     // Toujours en premier
     if(this.form.valid) {
       this.service.save(this.form.value)
+      this.form.reset({
+        imageSrc:"",
+        imageAlt:"",
+        titre:"",
+        description:"",
+        postLink:"#"});
+      this.router.navigate(["/"])
     }
   }
 

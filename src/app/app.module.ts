@@ -14,6 +14,7 @@ import { FormGroupComponent } from './components/form-group/form-group.component
 import { RegisterComponent } from './pages/register/register.component';
 import { LoginComponent } from './pages/login/login.component';
 import { EditorComponent } from './pages/editor/editor.component';
+import {HotToastModule} from "@ngneat/hot-toast";
 
 @NgModule({
   declarations: [
@@ -33,6 +34,11 @@ import { EditorComponent } from './pages/editor/editor.component';
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
+    HotToastModule.forRoot({
+      theme: "snackbar",
+      autoClose: true,
+      duration: 1000
+    }),
     AppRoutingModule
   ],
   providers: [],

@@ -15,12 +15,12 @@ const routes: Routes = [
   {path: "formulaire", component: EditorComponent, children: [
       {path: "", component: FormulaireComponent},
       {path: "control", component: FormControlComponent},
-      {path: "group", component: FormGroupComponent},
+      {path: "group/:id", component: FormGroupComponent},
     ]},
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, {scrollPositionRestoration: "enabled"})],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

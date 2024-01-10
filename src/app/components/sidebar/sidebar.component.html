@@ -15,16 +15,21 @@
       </header>
       <ul>
         <li><a routerLink="/">Homepage</a></li>
-        <li><a routerLink="/register">Register</a></li>
-        <li><a routerLink="/login">Login</a></li>
-        <li>
-          <span [class.active]="active" class="opener" (click)="active = !active">Formulaires</span>
-          <ul>
-            <li><a routerLink="/formulaire">Template Driven</a></li>
-            <li><a routerLink="/formulaire/control">Form Control</a></li>
-            <li><a routerLink="/formulaire/group">Form Group</a></li>
-          </ul>
-        </li>
+        <ng-container *ngIf="isLogged; else public">
+          <li><a (click)="logout()">Logout</a></li>
+          <li>
+            <span [class.active]="active" class="opener" (click)="active = !active">Formulaires</span>
+            <ul>
+              <li><a routerLink="/formulaire">Template Driven</a></li>
+              <li><a routerLink="/formulaire/control">Form Control</a></li>
+              <li><a routerLink="/formulaire/group/0">Form Group</a></li>
+            </ul>
+          </li>
+        </ng-container>
+        <ng-template #public>
+          <li><a routerLink="/register">Register</a></li>
+          <li><a routerLink="/login">Login</a></li>
+        </ng-template>
       </ul>
     </nav>
 

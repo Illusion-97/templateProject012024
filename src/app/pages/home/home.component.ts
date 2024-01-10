@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import {PostService} from "../../services/post.service";
+import {Post} from "../../models/post";
 
 @Component({
   selector: 'app-home',
@@ -8,4 +10,10 @@ import { Component } from '@angular/core';
 export class HomeComponent {
 
   image: string = "pic10.jpg";
+  constructor(private service: PostService) {
+  }
+
+  get posts() {
+    return this.service.posts
+  }
 }
