@@ -1,4 +1,5 @@
 export interface Post {
+  id?: number;
   imageSrc: string;
   imageAlt?: string;
   titre: string;
