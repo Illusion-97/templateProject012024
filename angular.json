@@ -25,6 +25,7 @@
               "src/assets"
             ],
             "styles": [
+              "node_modules/@ngneat/hot-toast/src/styles/styles.css",
               "./node_modules/bootstrap/scss/bootstrap.scss",
               "src/assets/css/main.css",
               "src/styles.css"

@@ -21,10 +21,8 @@ export class AuthService {
   login(email: string, password: string): User | undefined {
     const foundUser = this.users.filter(user => user.email === email && user.password === password)[0]
     this.currentUser = foundUser;
-    if(this.currentUser)
-    this.router.navigate(["/formulaire"]).then(
-      () => this.toast.success(`Bienvenue : ${this.currentUser?.username}`, {autoClose: true, duration: 200})
-    )
+    if(this.currentUser) this.toast.success(`Bienvenue : ${this.currentUser.username}`)
+    this.router.navigate(["/formulaire"])
     return foundUser;
   }
 

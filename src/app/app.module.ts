@@ -15,6 +15,7 @@ import { RegisterComponent } from './pages/register/register.component';
 import { LoginComponent } from './pages/login/login.component';
 import { EditorComponent } from './pages/editor/editor.component';
 import {HotToastModule} from "@ngneat/hot-toast";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 @NgModule({
   declarations: [
@@ -35,10 +36,9 @@ import {HotToastModule} from "@ngneat/hot-toast";
     FormsModule,
     ReactiveFormsModule,
     HotToastModule.forRoot({
-      theme: "snackbar",
-      autoClose: true,
-      duration: 1000
+      theme: "snackbar"
     }),
+    BrowserAnimationsModule,
     AppRoutingModule
   ],
   providers: [],
