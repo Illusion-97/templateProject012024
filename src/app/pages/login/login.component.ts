@@ -15,7 +15,9 @@ export class LoginComponent {
   }
   handleSubmit(valid: boolean) {
     if (valid) {
-      console.log("USER",this.service.login(this.mail, this.password))
+      this.service.login(this.mail, this.password)
+        .subscribe(user => console.log("USER",user))
+
     }
   }
 }

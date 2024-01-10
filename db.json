@@ -1,0 +1,26 @@
+{
+  "users": [
+    {
+      "id": 0,
+      "username": "Yanis",
+      "email": "yanis971.60@gmail.com",
+      "password": "123456789",
+      "icon": ""
+    },
+    {
+      "email": "jeremy971.60@gmail.com",
+      "password": "$2a$10$m9Rz0nJA4/2eLLqW0T7fCupTu.aYBhIyUcy.R.1rl4k4N.MHlyAoe",
+      "username": "Jeremy",
+      "icon": "",
+      "id": 1
+    },
+    {
+      "email": "yanis@gmail.com",
+      "password": "$2a$10$P9Qi2P3w0juGjwQGmKN0Ku06xrEXxbWRwUVWiRvvCVE2ZgDIYXsCe",
+      "username": "Yanis",
+      "icon": "",
+      "id": 2
+    }
+  ],
+  "posts": []
+}
