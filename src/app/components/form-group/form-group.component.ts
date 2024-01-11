@@ -1,8 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {getFormControl, hasError, isInvalid} from "../../tools/reactive-forms-tool";
 import {PostService} from "../../services/post.service";
-import {ActivatedRoute, Router} from "@angular/router";
+import {ActivatedRoute, ActivatedRouteSnapshot, Router, RouterStateSnapshot} from "@angular/router";
+import { HotToastService } from '@ngneat/hot-toast';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-form-group',
@@ -12,6 +14,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 export class FormGroupComponent {
 
   form : FormGroup = new FormGroup<any>({
+    id: new FormControl(0, [Validators.required]),
     imageSrc: new FormControl('', [Validators.required]),
     imageAlt: new FormControl(''),
     titre: new FormControl('', [Validators.required, Validators.minLength(10)]),
@@ -19,22 +22,58 @@ export class FormGroupComponent {
     postLink: new FormControl('', [Validators.required])
   })
 
-  constructor(private service: PostService, private router: Router, private route: ActivatedRoute) {
-    console.log(service.posts)
-      alert(route.snapshot.paramMap.get("id"))
+  constructor(private service: PostService, private router: Router, private route: ActivatedRoute, private toast: HotToastService) {
+    /*route.paramMap.subscribe({
+      next: param => {
+        const id = Number(param.get('id') || 0)
+        if(id !== 0) {
+          service.get(id).subscribe({
+            next: post => {
+              this.form.patchValue(post)
+            }
+          })
+        }
+      }
+    })*/
+    route.data.subscribe({
+      next: ({post}) => {
+        if(post) this.form.patchValue(post)
+      }
+    })
   }
 
   handleSubmit() {
     // Toujours en premier
     if(this.form.valid) {
-      this.service.save(this.form.value)
-      this.form.reset({
-        imageSrc:"",
-        imageAlt:"",
-        titre:"",
-        description:"",
-        postLink:"#"});
-      this.router.navigate(["/"])
+      let method : Observable<any>;
+      if(this.form.value.id) {
+        method = this.service.update(this.form.value)
+      } else {
+
+        method = this.service.save(this.form.value)
+      }
+      
+      // Notification via popup de l'état de la requête
+      //(this.form.value.id ? this.service.update(this.form.value) : this.service.save(this.form.value)).pipe(this.toast.observe({
+      method.pipe(this.toast.observe({
+        loading: "Sauvegarde en cours",
+        success: "Sauvegardé !",
+        error: err => err.error
+      }))
+      .subscribe({
+        next: response => {
+          this.form.reset({
+            imageSrc:"",
+            imageAlt:"",
+            titre:"",
+            description:"",
+            postLink:"#"});
+          this.router.navigate(["/"])
+        },
+        error: err => {
+
+        }
+      })
     }
   }
 
@@ -62,4 +101,17 @@ export class FormGroupComponent {
     return hasError(this.getControl(name), errorCode)
   }
 
+}
+
+export const formResolver = (route: ActivatedRouteSnapshot,
+  state: RouterStateSnapshot) => {
+  const id = Number( route.paramMap.get("id") || 0)
+  return id === 0 ? {
+    id: 0,
+    imageSrc:"",
+    imageAlt:"",
+    titre:"",
+    description:"",
+    postLink:"#"}
+    : inject(PostService).get(id)
 }

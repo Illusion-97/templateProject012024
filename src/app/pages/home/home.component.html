@@ -59,12 +59,13 @@
     <h2>Ipsum sed dolor</h2>
   </header>
   <div class="posts">
-    <article *ngFor="let post of posts">
+    <article *ngFor="let post of (posts | async)">
       <a [href]="post.postLink" class="image"><img src="assets/images/{{post.imageSrc}}" [alt]="post.imageAlt" /></a>
       <h3>{{post.titre}}</h3>
       <p>{{post.description}}</p>
       <ul class="actions">
-        <li><a [href]="post.postLink" class="button">More</a></li>
+        <li><a routerLink="/formulaire/group/{{post.id}}"  class="button">Modifier</a></li>
+        <li><button (click)="delete(post.id)"  class="button">Delete</button></li>
       </ul>
     </article>
   </div>

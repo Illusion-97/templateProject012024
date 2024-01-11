@@ -1,10 +1,15 @@
 import { Injectable } from '@angular/core';
 import {Post} from "../models/post";
+import {HttpClient} from "@angular/common/http";
+import { Observable, tap } from 'rxjs';
+import { HotToastService } from '@ngneat/hot-toast';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PostService {
+
+  API_URL = "http://localhost:3000";
 
   posts: Post[] = [
     {
@@ -49,10 +54,29 @@ export class PostService {
       imageAlt: "",
       postLink: "#"
     }]
-  constructor() { }
+  constructor(private http: HttpClient, private toast: HotToastService) { }
+
+  get(id: number): Observable<Post> {
+    return this.http.get<Post>(`${this.API_URL}/posts/${id}`).pipe(this.toast.observe({
+      loading: "Recherche avec l'id : " + id,
+      success: "Trouvé !",
+      error: err => err.error
+    }))
+  }
 
   save(post: Post) {
-    this.posts.push(post);
-    console.log("POSTS", this.posts);
+    return this.http.post(`${this.API_URL}/posts`,post)
+  }
+
+  update(post: Post) {
+    return this.http.put(`${this.API_URL}/posts/${post.id}`,post)
+  }
+
+  all(): Observable<Post[]> {
+    return this.http.get<Post[]>(`${this.API_URL}/posts`);
+  }
+
+  delete(id : number): Observable<never> {
+    return this.http.delete<never>(`${this.API_URL}/posts/${id}`);
   }
 }

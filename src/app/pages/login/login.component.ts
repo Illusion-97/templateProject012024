@@ -17,7 +17,6 @@ export class LoginComponent {
     if (valid) {
       this.service.login(this.mail, this.password)
         .subscribe(user => console.log("USER",user))
-
     }
   }
 }

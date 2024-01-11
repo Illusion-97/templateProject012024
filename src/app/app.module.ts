@@ -16,7 +16,8 @@ import { LoginComponent } from './pages/login/login.component';
 import { EditorComponent } from './pages/editor/editor.component';
 import {HotToastModule} from "@ngneat/hot-toast";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import {HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
+import { TokenInterceptor } from './interceptors/token.interceptor';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,10 @@ import {HttpClientModule} from "@angular/common/http";
     BrowserAnimationsModule,
     AppRoutingModule
   ],
-  providers: [],
+  providers: [
+    // Je fournis à mon contexte un intercepteur par sa classe en lui permettant de travailler sur plusieurs requêtes
+    {provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -3,7 +3,7 @@ import {User} from "../models/user";
 import {Router} from "@angular/router";
 import {HotToastService} from "@ngneat/hot-toast";
 import {HttpClient} from "@angular/common/http";
-import {map, Observable} from "rxjs";
+import {BehaviorSubject, map, Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +11,7 @@ import {map, Observable} from "rxjs";
 export class AuthService {
 
   API_URL = "http://localhost:3000";
+  USER_STORAGE_KEY = "USER"
 
   users : User[] = [{
     id:         0,
@@ -19,8 +20,21 @@ export class AuthService {
     password:   "123456789",
     icon:      ""
   }]
-  currentUser? : User;
-  constructor(private router: Router, private toast: HotToastService, private http : HttpClient) { }
+  loginResponse: BehaviorSubject<LoginResponse | undefined> = new BehaviorSubject<LoginResponse | undefined>(undefined);
+  
+  currentUser : Observable<User | undefined> = this.loginResponse.pipe(map(login => login?.user));
+  
+  get token() {return this.loginResponse.value?.accessToken} 
+  
+  constructor(private router: Router, private toast: HotToastService, private http : HttpClient) {
+    this.loginResponse.subscribe({
+      next: user => {
+        if(user) sessionStorage.setItem(this.USER_STORAGE_KEY,JSON.stringify(user))
+      }
+    })
+    const sessionUser = sessionStorage.getItem(this.USER_STORAGE_KEY)
+    if(sessionUser) this.loginResponse.next(JSON.parse(sessionUser))
+   }
 
   login(email: string, password: string): Observable<User> {
 
@@ -33,17 +47,16 @@ export class AuthService {
     }))*/
 
     //return foundUser;
-    return this.http.post<RegisterResponse>(`${this.API_URL}/login`, {email: email, password: password})
+    return this.http.post<LoginResponse>(`${this.API_URL}/login`, {email: email, password: password})
       .pipe(map(response => {
-        const foundUser = response.user
-        this.currentUser = foundUser;
-        this.router.navigate(["/formulaire"])
-        return foundUser;
+        this.loginResponse.next(response);
+        this.router.navigate(["/formulaire/group/0"])
+        return response.user;
       }))
   }
 
   register(user: User) {
-    this.http.post<RegisterResponse>(`${this.API_URL}/register`, user)
+    this.http.post<LoginResponse>(`${this.API_URL}/register`, user)
       // Tant qu'on n'a pas souscrit à l'observable la requête ne part pas
       .subscribe(
         response => {
@@ -55,13 +68,19 @@ export class AuthService {
   }
 
   logout() {
-    this.currentUser = undefined;
+    this.loginResponse.next(undefined);
+    sessionStorage.clear()
     this.toast.success(`Déconnecté !`)
     this.router.navigate(["/login"])
   }
+
+  isLogged(): Observable<boolean> {
+    // Vérifie que la valeur n'est pas 'falsy'
+    return this.currentUser.pipe(map(value => !!value))
+  }
 }
 
-interface RegisterResponse {
+interface LoginResponse {
   accessToken: string;
   user: User
 }

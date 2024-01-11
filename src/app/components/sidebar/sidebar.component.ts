@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import {AuthService} from "../../services/auth.service";
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-sidebar',
@@ -47,10 +48,13 @@ export class SidebarComponent {
     }
   ]
 
+  isLogged : Observable<boolean>
+
   constructor(private service: AuthService) {
     this.minipostdefault = new MiniPostClassDefault();
     this.minipostdefault.src = "pic09.jpg"
     this.minipostdefault.text = this.text;
+    this.isLogged = this.service.isLogged();
   }
 
   onClick(): void {
@@ -66,10 +70,7 @@ export class SidebarComponent {
     this.service.logout();
   }
 
-  get isLogged(): boolean {
-    // Vérifie que la valeur n'est pas 'falsy'
-    return !!this.service.currentUser
-  }
+  
 }
 
 class MiniPostClass {

@@ -20,7 +20,23 @@
       "username": "Yanis",
       "icon": "",
       "id": 2
+    },
+    {
+      "email": "user123@yop.com",
+      "password": "$2a$10$L82MMXnKL2p8oqun04dn1OY11iVmLGoCjHTrAx7WkiViRK1ShR2au",
+      "username": "user123",
+      "icon": "",
+      "id": 3
     }
   ],
-  "posts": []
+  "posts": [
+    {
+      "id": 1,
+      "imageSrc": "pic01.jpg",
+      "imageAlt": "",
+      "titre": "Titre Anterieur",
+      "description": "Try Meh 1",
+      "postLink": "link"
+    }
+  ]
 }

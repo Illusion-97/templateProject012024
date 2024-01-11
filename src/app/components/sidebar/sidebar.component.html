@@ -15,7 +15,7 @@
       </header>
       <ul>
         <li><a routerLink="/">Homepage</a></li>
-        <ng-container *ngIf="isLogged; else public">
+        <ng-container *ngIf="isLogged | async; else public">
           <li><a (click)="logout()">Logout</a></li>
           <li>
             <span [class.active]="active" class="opener" (click)="active = !active">Formulaires</span>
